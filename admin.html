@@ -1,58 +1,44 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
+
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<title>Admin duyệt nạp</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#f2f2f2;
+background:#0f172a;
+color:white;
 padding:30px;
-}
-
-h1{
-text-align:center;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-background:white;
-margin-top:20px;
 }
 
 th,td{
-border:1px solid #ddd;
+border:1px solid #333;
 padding:10px;
 text-align:center;
 }
 
-th{
-background:#333;
-color:white;
-}
-
-input{
-width:80px;
-padding:5px;
-}
-
 button{
-padding:6px 10px;
+padding:6px 12px;
 border:none;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
 }
 
-.add{
-background:#4CAF50;
+.duyet{
+background:#00c853;
 color:white;
 }
 
-.sub{
-background:#f44336;
+.xoa{
+background:red;
 color:white;
 }
 
@@ -62,103 +48,87 @@ color:white;
 
 <body>
 
-<h1>ADMIN PANEL</h1>
+<h2>Danh sách bill nạp</h2>
 
 <table>
 
 <tr>
 <th>User</th>
-<th>Số dư</th>
-<th>Nhập tiền</th>
-<th>Cộng</th>
-<th>Trừ</th>
+<th>Số tiền</th>
+<th>Thời gian</th>
+<th>Duyệt</th>
+<th>Xóa</th>
 </tr>
 
-<tbody id="userTable"></tbody>
+<tbody id="list"></tbody>
 
 </table>
 
 <script>
 
-function loadUsers(){
+function load(){
 
-let users = JSON.parse(localStorage.getItem("users")) || []
+let data=JSON.parse(localStorage.getItem("billnap"))||[]
 
 let html=""
 
-if(users.length==0){
-html="<tr><td colspan='5'>Chưa có user</td></tr>"
-}
-
-users.forEach((u,i)=>{
+data.forEach((e,i)=>{
 
 html+=`
+
 <tr>
 
-<td>${u.username}</td>
+<td>${e.user}</td>
 
-<td>${u.balance || 0} đ</td>
+<td>${e.tien}</td>
+
+<td>${e.time}</td>
 
 <td>
-<input type="number" id="money${i}">
+<button class="duyet" onclick="duyet(${i})">Duyệt</button>
 </td>
 
 <td>
-<button class="add" onclick="addMoney(${i})">
-Cộng
-</button>
-</td>
-
-<td>
-<button class="sub" onclick="subMoney(${i})">
-Trừ
-</button>
+<button class="xoa" onclick="xoa(${i})">Xóa</button>
 </td>
 
 </tr>
+
 `
 
 })
 
-document.getElementById("userTable").innerHTML=html
+document.getElementById("list").innerHTML=html
 
 }
 
-function addMoney(i){
+function duyet(i){
 
-let users = JSON.parse(localStorage.getItem("users")) || []
+let data=JSON.parse(localStorage.getItem("billnap"))||[]
 
-let money = document.getElementById("money"+i).value
+alert("Đã duyệt cho "+data[i].user)
 
-if(money=="") return
+data.splice(i,1)
 
-users[i].balance = (users[i].balance || 0) + parseInt(money)
+localStorage.setItem("billnap",JSON.stringify(data))
 
-localStorage.setItem("users",JSON.stringify(users))
-
-loadUsers()
+load()
 
 }
 
-function subMoney(i){
+function xoa(i){
 
-let users = JSON.parse(localStorage.getItem("users")) || []
+let data=JSON.parse(localStorage.getItem("billnap"))||[]
 
-let money = document.getElementById("money"+i).value
+data.splice(i,1)
 
-if(money=="") return
+localStorage.setItem("billnap",JSON.stringify(data))
 
-users[i].balance = (users[i].balance || 0) - parseInt(money)
-
-if(users[i].balance < 0) users[i].balance = 0
-
-localStorage.setItem("users",JSON.stringify(users))
-
-loadUsers()
+load()
 
 }
 
-loadUsers()
+load()
 
 </script>
 
