@@ -1,97 +1,59 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Nạp tiền</title>
 
 <style>
 
 body{
-font-family:Arial;
 background:#0f172a;
+font-family:Arial;
 color:white;
 text-align:center;
 margin:0;
 }
 
-/* BOX */
-
 .box{
 margin-top:80px;
 background:#1e293b;
 padding:25px;
-border-radius:15px;
 width:340px;
 margin-left:auto;
 margin-right:auto;
-box-shadow:0 0 20px rgba(0,170,255,0.6);
+border-radius:12px;
+box-shadow:0 0 20px #00aaff;
 }
-
-/* QR */
 
 .qr{
-width:260px;
-border-radius:10px;
-margin-top:10px;
+width:250px;
+margin:10px 0;
 }
-
-/* TEXT */
-
-.typing{
-color:#00aaff;
-font-weight:bold;
-margin-top:10px;
-font-size:17px;
-}
-
-/* INPUT */
 
 input{
 width:90%;
 padding:10px;
-border-radius:8px;
+margin:8px;
 border:none;
-margin:6px;
+border-radius:8px;
 }
-
-/* BUTTON */
 
 button{
 background:#00c853;
+padding:10px 20px;
 border:none;
-padding:12px 20px;
-color:white;
 border-radius:8px;
-cursor:pointer;
+color:white;
 font-weight:bold;
 }
 
-/* BILL */
-
-.bill{
-background:#111827;
-margin:10px;
-padding:10px;
-border-radius:10px;
-}
-
-/* TUYẾT */
-
-.snow{
-position:fixed;
-top:-10px;
-color:white;
-font-size:10px;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{
-transform:translateY(100vh);
-}
+.typing{
+color:#00aaff;
+font-weight:bold;
 }
 
 </style>
@@ -102,166 +64,96 @@ transform:translateY(100vh);
 
 <div class="box">
 
-<h2>Quét mã để chuyển tiền</h2>
+<h2>Nạp tiền</h2>
 
-<img class="qr" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDABALDwwMDw0PEA8QERITFhUVFhgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/2wBDARESEhgVGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCAGQAZADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECA//EABYBAQEBAAAAAAAAAAAAAAAAAAECA//aAAwDAQACEAMQAAAB6AAAAP/EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAQUCl//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQMBAT8Bp//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQIBAT8Bp//Z">
+<img id="qr" class="qr">
 
 <p><b>LY VAN THANG</b></p>
 <p>ACB - 23935211</p>
 
 <p class="typing" id="typing"></p>
 
-<hr>
-
-<h3>Gửi bill sau khi chuyển</h3>
-
-<input id="user" placeholder="Tên tài khoản">
-
-<input id="amount" placeholder="Số tiền">
-
-<input type="file">
+<input id="money" placeholder="Nhập số tiền">
 
 <br>
 
-<button onclick="guiBill()">Gửi bill</button>
+<button onclick="taoQR()">Tạo QR</button>
+
+<hr>
+
+<h3>Gửi bill</h3>
+
+<input id="user" placeholder="Tên tài khoản">
+
+<button onclick="send()">Gửi bill</button>
 
 <p id="msg"></p>
 
 </div>
 
-<h2>Danh sách bill</h2>
-
-<div id="list"></div>
-
 <script>
 
-/* CHỮ TỰ VIẾT */
+/* CHỮ CHẠY */
 
-const texts=[
-"Nạp tối thiểu 10K",
-"Nạp đúng nội dung chuyển khoản",
-"Chờ admin duyệt sau khi nạp"
-]
+const text="Nạp tối thiểu 10K"
 
-let index=0
-let char=0
-let deleting=false
+let i=0
 
-function type(){
+function write(){
 
-let el=document.getElementById("typing")
+document.getElementById("typing").innerHTML=text.substring(0,i)
 
-if(!deleting){
+i++
 
-el.innerHTML=texts[index].substring(0,char++)
+if(i<=text.length) setTimeout(write,80)
 
-if(char>texts[index].length){
-deleting=true
-setTimeout(type,1500)
+}
+
+write()
+
+/* TẠO QR */
+
+function taoQR(){
+
+let money=document.getElementById("money").value
+
+if(money<10000){
+
+alert("Nạp tối thiểu 10K")
+
 return
-}
-
-}else{
-
-el.innerHTML=texts[index].substring(0,char--)
-
-if(char<0){
-deleting=false
-index++
-if(index>=texts.length) index=0
-}
 
 }
 
-setTimeout(type,90)
+let qr=`https://img.vietqr.io/image/acb-23935211-compact.png?amount=${money}&addInfo=NAPTIEN`
+
+document.getElementById("qr").src=qr
 
 }
-
-type()
 
 /* GỬI BILL */
 
-function guiBill(){
+function send(){
 
 let user=document.getElementById("user").value
-let amount=document.getElementById("amount").value
+let money=document.getElementById("money").value
 
-if(user=="" || amount==""){
+let data=JSON.parse(localStorage.getItem("bill"))||[]
 
-document.getElementById("msg").innerHTML="Nhập đầy đủ thông tin"
-return
+data.push({
 
-}
-
-let bill={
 user:user,
-amount:amount,
-time:new Date().toLocaleString(),
-status:"Chờ duyệt"
-}
-
-let list=JSON.parse(localStorage.getItem("bill")) || []
-
-list.push(bill)
-
-localStorage.setItem("bill",JSON.stringify(list))
-
-document.getElementById("msg").innerHTML="Đã gửi bill chờ admin duyệt"
-
-loadBill()
-
-}
-
-/* LOAD BILL */
-
-function loadBill(){
-
-let list=JSON.parse(localStorage.getItem("bill")) || []
-
-let html=""
-
-list.forEach(b=>{
-
-html+=`
-
-<div class="bill">
-
-User: ${b.user}<br>
-Tiền: ${b.amount}<br>
-Thời gian: ${b.time}<br>
-Trạng thái: ${b.status}
-
-</div>
-
-`
+money:money,
+status:"Chờ duyệt",
+time:new Date().toLocaleString()
 
 })
 
-document.getElementById("list").innerHTML=html
+localStorage.setItem("bill",JSON.stringify(data))
+
+document.getElementById("msg").innerHTML="Đã gửi bill"
 
 }
-
-loadBill()
-
-/* TUYẾT RƠI */
-
-function snow(){
-
-let s=document.createElement("div")
-
-s.className="snow"
-s.innerHTML="❄"
-
-s.style.left=Math.random()*window.innerWidth+"px"
-s.style.animationDuration=(Math.random()*5+5)+"s"
-
-document.body.appendChild(s)
-
-setTimeout(()=>{s.remove()},10000)
-
-}
-
-setInterval(snow,200)
 
 </script>
 
