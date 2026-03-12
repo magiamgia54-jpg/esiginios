@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>IOS Thắng Sign</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* TOPBAR */
+
+.topbar{
+background:#333;
+color:white;
+padding:15px;
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
+}
+
+.menu-btn{
+position:absolute;
+right:20px;
+top:15px;
+font-size:22px;
+cursor:pointer;
+}
+
+/* USER */
+
+.user{
+position:absolute;
+right:60px;
+top:10px;
+}
+
+.avatar{
+width:35px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* MENU */
+
+.menu{
+display:none;
+background:#222;
+padding:10px;
+}
+
+.menu a{
+display:block;
+padding:10px;
+color:white;
+text-decoration:none;
+}
+
+/* HEADER */
+
+.header{
+margin-top:90px;
+}
+
+.logo{
+width:110px;
+border-radius:50%;
+box-shadow:0 0 15px rgba(0,170,255,0.8);
+}
+
+/* TYPING */
+
+.typing{
+color:#00aaff;
+font-weight:bold;
+font-size:18px;
+}
+
+/* SOCIAL */
+
+.social{
+margin:20px;
+}
+
+.social button{
+background:#333;
+border:none;
+color:white;
+padding:14px 24px;
+margin:5px;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* APP */
+
+.apps{
+margin:20px;
+}
+
+.app{
+background:white;
+padding:15px;
+margin:10px;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.app-left{
+display:flex;
+align-items:center;
+}
+
+.app img{
+width:50px;
+height:50px;
+border-radius:10px;
+margin-right:10px;
+}
+
+.install{
+background:#00c853;
+border:none;
+color:white;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* SNOW */
+
+.snowflake{
+position:fixed;
+top:-10px;
+color:white;
+font-size:12px;
+pointer-events:none;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+IOS Thắng Sign
+
+<div class="user">
+<a href="account.html">
+<img src="https://i.imgur.com/2yaf2wb.png" class="avatar">
+</a>
+</div>
+
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+</div>
+
+<div class="menu" id="menu">
+<a href="#">Trang chủ</a>
+<a href="chungchi.html">Mua chứng chỉ</a>
+<a href="login.html">Đăng nhập</a>
+</div>
+
+
+<div class="header">
+
+<img class="logo" src="https://i.imgur.com/8Km9tLL.png">
+
+<h2>Hi, this is</h2>
+
+<h1>IOS Thắng Website Tải Esign & Ksign Free ✔</h1>
+
+<p class="typing" id="typing"></p>
+
+</div>
+
+
+<h2>Signed App</h2>
+
+<div class="apps">
+
+<div class="app">
+
+<div class="app-left">
+
+<img src="https://i.imgur.com/Q9Lg3Hh.png">
+
+<div>
+<b>Delta VNG Fix Lag IOS</b><br>
+<small>Version 2.7.10</small>
+</div>
+
+</div>
+
+<button class="install"
+onclick="window.location.href='itms-services://?action=download-manifest&url=https://yourdomain.com/delta.plist'">
+
+Install
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* MENU */
+
+function toggleMenu(){
+let menu=document.getElementById("menu")
+menu.style.display = menu.style.display==="block" ? "none":"block"
+}
+
+/* TEXT */
+
+const texts=[
+"Mua Chứng Chỉ Esign Liên Hệ Zalo",
+"Mua Chứng Chỉ Ksign Liên Hệ Telegram",
+"Website Ký App IOS Uy Tín"
+]
+
+let index=0
+let char=0
+let deleting=false
+
+function type(){
+
+let el=document.getElementById("typing")
+
+if(!deleting){
+
+el.innerHTML=texts[index].substring(0,char++)
+
+if(char>texts[index].length){
+deleting=true
+setTimeout(type,1500)
+return
+}
+
+}else{
+
+el.innerHTML=texts[index].substring(0,char--)
+
+if(char<0){
+deleting=false
+index++
+if(index>=texts.length) index=0
+}
+
+}
+
+setTimeout(type,80)
+
+}
+
+type()
+
+/* SNOW */
+
+function snow(){
+
+let snow=document.createElement("div")
+
+snow.className="snowflake"
+snow.innerHTML="❄"
+
+snow.style.left=Math.random()*window.innerWidth+"px"
+snow.style.animationDuration=(Math.random()*5+5)+"s"
+
+document.body.appendChild(snow)
+
+setTimeout(()=>{snow.remove()},10000)
+
+}
+
+setInterval(snow,200)
+
+</script>
+
+</body>
+</html>
