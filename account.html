@@ -1,13 +1,110 @@
-<h2 style="text-align:center;margin-top:100px">Tài khoản của bạn</h2>
+<!DOCTYPE html>
+<html lang="vi">
 
-<p style="text-align:center">Số dư: 0đ</p>
+<head>
 
-<div style="text-align:center">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<a href="nap.html">
+<title>Tài khoản</title>
 
-<button>Nạp tiền</button>
+<style>
 
-</a>
+body{
+margin:0;
+padding:0;
+font-family:Arial;
+background:#0f172a;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.box{
+background:#1e293b;
+width:320px;
+padding:30px;
+border-radius:15px;
+text-align:center;
+color:white;
+box-shadow:0 0 25px rgba(0,170,255,0.5);
+}
+
+h2{
+margin-top:0;
+}
+
+.balance{
+font-size:22px;
+margin:15px 0;
+color:#00e676;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+margin:5px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.nap{
+background:#00c853;
+color:white;
+}
+
+.logout{
+background:#ff5252;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Tài khoản của bạn</h2>
+
+<p id="user">User</p>
+
+<div class="balance">
+Số dư: <span id="money">0</span>đ
+</div>
+
+<button class="nap" onclick="location.href='nap.html'">
+Nạp tiền
+</button>
+
+<br><br>
+
+<button class="logout" onclick="logout()">
+Đăng xuất
+</button>
 
 </div>
+
+<script>
+
+let user = localStorage.getItem("user") || "Khách"
+let money = localStorage.getItem("money") || 0
+
+document.getElementById("user").innerHTML = "User: " + user
+document.getElementById("money").innerHTML = Number(money).toLocaleString()
+
+function logout(){
+
+localStorage.removeItem("user")
+
+location.href="index.html"
+
+}
+
+</script>
+
+</body>
+</html>
