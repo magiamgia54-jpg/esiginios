@@ -1,15 +1,116 @@
-<h2 style="text-align:center;margin-top:100px">Đăng nhập</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
 
-<form style="text-align:center">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<input placeholder="Tài khoản"><br><br>
+<title>Đăng nhập</title>
 
-<input type="password" placeholder="Mật khẩu"><br><br>
+<style>
 
-<button>Đăng nhập</button>
+body{
+margin:0;
+font-family:Arial;
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
 
-<br><br>
+.box{
+background:white;
+padding:40px;
+width:300px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+text-align:center;
+}
 
-<a href="register.html">Đăng ký</a>
+h1{
+margin-bottom:25px;
+}
 
-</form>
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+background:#4CAF50;
+color:white;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#388E3C;
+}
+
+.link{
+margin-top:15px;
+}
+
+a{
+text-decoration:none;
+color:#2196f3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Đăng nhập</h1>
+
+<input id="user" placeholder="Tên tài khoản">
+
+<input id="pass" type="password" placeholder="Mật khẩu">
+
+<button onclick="login()">Đăng nhập</button>
+
+<div class="link">
+Chưa có tài khoản? <a href="register.html">Đăng ký</a>
+</div>
+
+</div>
+
+<script>
+
+function login(){
+
+let user=document.getElementById("user").value
+let pass=document.getElementById("pass").value
+
+let savedUser=localStorage.getItem("user")
+let savedPass=localStorage.getItem("pass")
+
+if(user==savedUser && pass==savedPass){
+
+alert("Đăng nhập thành công")
+
+window.location.href="index.html"
+
+}else{
+
+alert("Sai tài khoản hoặc mật khẩu")
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
