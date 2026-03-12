@@ -23,8 +23,7 @@ margin-top:80px;
 background:#1e293b;
 padding:25px;
 width:340px;
-margin-left:auto;
-margin-right:auto;
+margin:auto;
 border-radius:12px;
 box-shadow:0 0 20px #00aaff;
 }
@@ -49,11 +48,27 @@ border:none;
 border-radius:8px;
 color:white;
 font-weight:bold;
+cursor:pointer;
 }
 
 .typing{
 color:#00aaff;
 font-weight:bold;
+}
+
+/* tuyết */
+
+.snow{
+position:fixed;
+top:-10px;
+color:white;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
 }
 
 </style>
@@ -73,7 +88,7 @@ font-weight:bold;
 
 <p class="typing" id="typing"></p>
 
-<input id="money" placeholder="Nhập số tiền">
+<input id="money" placeholder="Nhập số tiền" oninput="formatMoney(this)">
 
 <br>
 
@@ -93,7 +108,7 @@ font-weight:bold;
 
 <script>
 
-/* CHỮ CHẠY */
+/* chữ chạy */
 
 const text="Nạp tối thiểu 10K"
 
@@ -111,11 +126,25 @@ if(i<=text.length) setTimeout(write,80)
 
 write()
 
-/* TẠO QR */
+/* format tiền */
+
+function formatMoney(input){
+
+let value=input.value.replace(/,/g,"")
+
+if(isNaN(value)) return
+
+let number=parseInt(value)
+
+input.value=number.toLocaleString("en-US")
+
+}
+
+/* tạo QR */
 
 function taoQR(){
 
-let money=document.getElementById("money").value
+let money=document.getElementById("money").value.replace(/,/g,"")
 
 if(money<10000){
 
@@ -131,7 +160,7 @@ document.getElementById("qr").src=qr
 
 }
 
-/* GỬI BILL */
+/* gửi bill */
 
 function send(){
 
@@ -154,6 +183,26 @@ localStorage.setItem("bill",JSON.stringify(data))
 document.getElementById("msg").innerHTML="Đã gửi bill"
 
 }
+
+/* tuyết */
+
+function snow(){
+
+let s=document.createElement("div")
+
+s.className="snow"
+s.innerHTML="❄"
+
+s.style.left=Math.random()*window.innerWidth+"px"
+s.style.animationDuration=(Math.random()*5+5)+"s"
+
+document.body.appendChild(s)
+
+setTimeout(()=>{s.remove()},10000)
+
+}
+
+setInterval(snow,200)
 
 </script>
 
