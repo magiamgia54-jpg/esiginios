@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Nạp tiền</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+margin:0;
+overflow:hidden;
+}
+
+/* BOX */
+
+.box{
+margin-top:100px;
+background:#1e293b;
+padding:30px;
+border-radius:15px;
+width:330px;
+margin-left:auto;
+margin-right:auto;
+box-shadow:0 0 20px rgba(0,170,255,0.6);
+}
+
+/* QR */
+
+.qr{
+width:260px;
+border-radius:10px;
+}
+
+/* TEXT */
+
+.typing{
+color:#00aaff;
+font-weight:bold;
+margin-top:15px;
+font-size:18px;
+}
+
+/* SNOW */
+
+.snow{
+position:fixed;
+top:-10px;
+color:white;
+font-size:10px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Quét mã để nạp tiền</h2>
+
+<img class="qr" src="https://i.imgur.com/2xXc7QK.jpeg">
+
+<p><b>LY VAN THANG</b></p>
+<p>ACB - 23935211</p>
+
+<p class="typing" id="typing"></p>
+
+</div>
+
+<script>
+
+/* TEXT */
+
+const texts=[
+"Nạp tối thiểu 10K",
+"Nạp đúng nội dung để được cộng xu",
+"Chờ admin duyệt sau khi nạp"
+]
+
+let index=0
+let char=0
+let deleting=false
+
+function type(){
+
+let el=document.getElementById("typing")
+
+if(!deleting){
+
+el.innerHTML=texts[index].substring(0,char++)
+
+if(char>texts[index].length){
+deleting=true
+setTimeout(type,1500)
+return
+}
+
+}else{
+
+el.innerHTML=texts[index].substring(0,char--)
+
+if(char<0){
+deleting=false
+index++
+if(index>=texts.length) index=0
+}
+
+}
+
+setTimeout(type,90)
+
+}
+
+type()
+
+/* SNOW */
+
+function snow(){
+
+let s=document.createElement("div")
+
+s.className="snow"
+s.innerHTML="❄"
+
+s.style.left=Math.random()*window.innerWidth+"px"
+s.style.animationDuration=(Math.random()*5+5)+"s"
+
+document.body.appendChild(s)
+
+setTimeout(()=>{s.remove()},10000)
+
+}
+
+setInterval(snow,200)
+
+</script>
+
+</body>
+</html>
