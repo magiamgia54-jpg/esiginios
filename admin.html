@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Admin Panel</title>
 
 <style>
 
 body{
-background:#0f172a;
-color:white;
 font-family:Arial;
-padding:20px;
-text-align:center;
+background:#f2f2f2;
+padding:30px;
 }
 
 h1{
-color:#00aaff;
+text-align:center;
 }
 
 table{
 width:100%;
-margin-top:20px;
 border-collapse:collapse;
-background:#1e293b;
+background:white;
+margin-top:20px;
 }
 
 th,td{
+border:1px solid #ddd;
 padding:10px;
-border-bottom:1px solid #334155;
+text-align:center;
+}
+
+th{
+background:#333;
+color:white;
+}
+
+input{
+width:80px;
+padding:5px;
 }
 
 button{
 padding:6px 10px;
 border:none;
-border-radius:6px;
+border-radius:5px;
 cursor:pointer;
 }
 
-.ok{
-background:#00c853;
+.add{
+background:#4CAF50;
 color:white;
 }
 
-.del{
-background:#ff1744;
+.sub{
+background:#f44336;
 color:white;
 }
 
@@ -56,96 +62,103 @@ color:white;
 
 <body>
 
-<h1>QUẢN LÝ NẠP</h1>
+<h1>ADMIN PANEL</h1>
 
 <table>
 
 <tr>
 <th>User</th>
-<th>Tiền</th>
-<th>Thời gian</th>
-<th>Trạng thái</th>
-<th>Hành động</th>
+<th>Số dư</th>
+<th>Nhập tiền</th>
+<th>Cộng</th>
+<th>Trừ</th>
 </tr>
 
-<tbody id="list"></tbody>
+<tbody id="userTable"></tbody>
 
 </table>
 
 <script>
 
-if(localStorage.getItem("admin")!="true"){
+function loadUsers(){
 
-window.location="admin-login.html"
-
-}
-
-/* LOAD BILL */
-
-function load(){
-
-let data=JSON.parse(localStorage.getItem("bill"))||[]
+let users = JSON.parse(localStorage.getItem("users")) || []
 
 let html=""
 
-data.forEach((b,i)=>{
+if(users.length==0){
+html="<tr><td colspan='5'>Chưa có user</td></tr>"
+}
+
+users.forEach((u,i)=>{
 
 html+=`
-
 <tr>
 
-<td>${b.user}</td>
-<td>${b.amount}</td>
-<td>${b.time}</td>
-<td>${b.status}</td>
+<td>${u.username}</td>
+
+<td>${u.balance || 0} đ</td>
 
 <td>
+<input type="number" id="money${i}">
+</td>
 
-<button class="ok" onclick="duyet(${i})">Duyệt</button>
+<td>
+<button class="add" onclick="addMoney(${i})">
+Cộng
+</button>
+</td>
 
-<button class="del" onclick="xoa(${i})">Xóa</button>
-
+<td>
+<button class="sub" onclick="subMoney(${i})">
+Trừ
+</button>
 </td>
 
 </tr>
-
 `
 
 })
 
-document.getElementById("list").innerHTML=html
+document.getElementById("userTable").innerHTML=html
 
 }
 
-/* DUYỆT */
+function addMoney(i){
 
-function duyet(i){
+let users = JSON.parse(localStorage.getItem("users")) || []
 
-let data=JSON.parse(localStorage.getItem("bill"))
+let money = document.getElementById("money"+i).value
 
-data[i].status="Đã duyệt"
+if(money=="") return
 
-localStorage.setItem("bill",JSON.stringify(data))
+users[i].balance = (users[i].balance || 0) + parseInt(money)
 
-load()
+localStorage.setItem("users",JSON.stringify(users))
 
-}
-
-/* XOÁ */
-
-function xoa(i){
-
-let data=JSON.parse(localStorage.getItem("bill"))
-
-data.splice(i,1)
-
-localStorage.setItem("bill",JSON.stringify(data))
-
-load()
+loadUsers()
 
 }
 
-load()
+function subMoney(i){
+
+let users = JSON.parse(localStorage.getItem("users")) || []
+
+let money = document.getElementById("money"+i).value
+
+if(money=="") return
+
+users[i].balance = (users[i].balance || 0) - parseInt(money)
+
+if(users[i].balance < 0) users[i].balance = 0
+
+localStorage.setItem("users",JSON.stringify(users))
+
+loadUsers()
+
+}
+
+loadUsers()
 
 </script>
 
