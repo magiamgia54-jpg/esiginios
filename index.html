@@ -18,8 +18,6 @@ background:#f5f5f5;
 text-align:center;
 }
 
-/* thanh trên */
-
 .topbar{
 background:#222;
 color:white;
@@ -27,8 +25,6 @@ padding:15px;
 font-size:20px;
 position:relative;
 }
-
-/* nút menu */
 
 .menuBtn{
 position:absolute;
@@ -38,14 +34,12 @@ font-size:28px;
 cursor:pointer;
 }
 
-/* menu */
-
 .menu{
 position:absolute;
 right:10px;
 top:55px;
 background:white;
-width:220px;
+width:230px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
 display:none;
@@ -60,12 +54,6 @@ text-decoration:none;
 color:black;
 }
 
-.menu a:last-child{
-border:none;
-}
-
-/* avatar */
-
 .avatar{
 width:120px;
 height:120px;
@@ -74,23 +62,16 @@ margin-top:30px;
 box-shadow:0 0 15px #00aaff;
 }
 
-/* tiêu đề */
-
 .title{
-font-size:38px;
+font-size:36px;
 font-weight:bold;
 margin-top:20px;
 }
 
-/* chữ chạy */
-
 .subtitle{
 color:#2196f3;
-margin-top:10px;
-height:24px;
+height:25px;
 }
-
-/* app */
 
 .appbox{
 background:white;
@@ -98,8 +79,8 @@ margin:30px;
 padding:20px;
 border-radius:15px;
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
@@ -109,6 +90,23 @@ color:white;
 border:none;
 padding:10px 20px;
 border-radius:8px;
+cursor:pointer;
+}
+
+input{
+width:80%;
+padding:10px;
+margin:5px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#2196f3;
+color:white;
 cursor:pointer;
 }
 
@@ -128,9 +126,9 @@ IOS Thắng Sign
 
 <div class="menu" id="menu">
 
-<a>👤 Tài khoản : <span id="username"></span></a>
+<a>👤 Tài khoản: <span id="username">Khách</span></a>
 
-<a>💰 Số dư : <span id="balance">0đ</span></a>
+<a>💰 Số dư: <span id="balance">0đ</span></a>
 
 <a href="nap.html">💳 Nạp tiền</a>
 
@@ -140,7 +138,7 @@ IOS Thắng Sign
 
 <img class="avatar" src="https://i.imgur.com/2yaf2wb.png">
 
-<h2>Hi, <span id="hello"></span></h2>
+<h2>Hi, <span id="hello">Khách</span></h2>
 
 <div class="title">
 
@@ -150,6 +148,16 @@ Esign & Ksign Free ✔
 </div>
 
 <p class="subtitle" id="typing"></p>
+
+<h3>Mua chứng chỉ</h3>
+
+<p>
+
+Zalo: 0395251479  
+<br>
+Telegram: @iossigm
+
+</p>
 
 <h2>Signed App</h2>
 
@@ -163,33 +171,89 @@ Version 2.7.10
 
 </div>
 
-<button class="install">
-
-Install
-
-</button>
+<button class="install">Install</button>
 
 </div>
 
+<hr>
+
+<h2>Đăng nhập</h2>
+
+<input id="loginUser" placeholder="Tên tài khoản">
+
+<input id="loginPass" type="password" placeholder="Mật khẩu">
+
+<br>
+
+<button onclick="login()">Đăng nhập</button>
+
+<h2>Đăng ký</h2>
+
+<input id="regUser" placeholder="Tên tài khoản">
+
+<input id="regPass" type="password" placeholder="Mật khẩu">
+
+<br>
+
+<button onclick="register()">Đăng ký</button>
+
 <script>
 
-/* mở menu */
+/* menu */
 
 function openMenu(){
 
 let m=document.getElementById("menu")
 
-m.style.display = (m.style.display=="block") ? "none":"block"
+m.style.display=(m.style.display=="block")?"none":"block"
 
 }
 
-/* đăng xuất */
+/* đăng ký */
 
-function logout(){
+function register(){
 
-localStorage.removeItem("login")
+let user=document.getElementById("regUser").value
+let pass=document.getElementById("regPass").value
+
+let users=JSON.parse(localStorage.getItem("users"))||[]
+
+users.push({
+username:user,
+password:pass,
+money:0
+})
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Đăng ký thành công")
+
+}
+
+/* đăng nhập */
+
+function login(){
+
+let user=document.getElementById("loginUser").value
+let pass=document.getElementById("loginPass").value
+
+let users=JSON.parse(localStorage.getItem("users"))||[]
+
+let u=users.find(x=>x.username==user && x.password==pass)
+
+if(u){
+
+localStorage.setItem("login",user)
+
+alert("Đăng nhập thành công")
 
 location.reload()
+
+}else{
+
+alert("Sai tài khoản")
+
+}
 
 }
 
@@ -199,13 +263,7 @@ function loadUser(){
 
 let login=localStorage.getItem("login")
 
-if(!login){
-
-document.getElementById("username").innerHTML="Khách"
-
-return
-
-}
+if(!login) return
 
 document.getElementById("username").innerHTML=login
 document.getElementById("hello").innerHTML=login
@@ -226,13 +284,23 @@ let u=users.find(x=>x.username==login)
 
 if(u){
 
-document.getElementById("balance").innerHTML=(u.money||0)+"đ"
+document.getElementById("balance").innerHTML=u.money+"đ"
 
 }
 
 }
 
-/* chào theo thời gian */
+/* đăng xuất */
+
+function logout(){
+
+localStorage.removeItem("login")
+
+location.reload()
+
+}
+
+/* chào theo giờ */
 
 function greeting(){
 
@@ -267,7 +335,7 @@ const text="Mua Chứng Chỉ Esign Liên Hệ Telegram @iossigm"
 let i=0
 let deleting=false
 
-function typingEffect(){
+function typing(){
 
 let el=document.getElementById("typing")
 
@@ -281,7 +349,7 @@ if(i>text.length){
 
 deleting=true
 
-setTimeout(typingEffect,1500)
+setTimeout(typing,1500)
 
 return
 
@@ -296,20 +364,19 @@ i--
 if(i<0){
 
 deleting=false
-
 i=0
 
 }
 
 }
 
-setTimeout(typingEffect,80)
+setTimeout(typing,80)
 
 }
 
-typingEffect()
+typing()
 
-/* chạy khi vào web */
+/* load */
 
 window.onload=function(){
 
@@ -322,5 +389,4 @@ greeting()
 </script>
 
 </body>
-
 </html>
