@@ -1,44 +1,153 @@
-<h2>Danh sách nạp tiền</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
 
-<div id="list"></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Admin Panel</title>
+
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+padding:20px;
+text-align:center;
+}
+
+h1{
+color:#00aaff;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+background:#1e293b;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #334155;
+}
+
+button{
+padding:6px 10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.ok{
+background:#00c853;
+color:white;
+}
+
+.del{
+background:#ff1744;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>QUẢN LÝ NẠP</h1>
+
+<table>
+
+<tr>
+<th>User</th>
+<th>Tiền</th>
+<th>Thời gian</th>
+<th>Trạng thái</th>
+<th>Hành động</th>
+</tr>
+
+<tbody id="list"></tbody>
+
+</table>
 
 <script>
 
-db.collection("nap").get().then((data)=>{
+if(localStorage.getItem("admin")!="true"){
 
-data.forEach((doc)=>{
+window.location="admin-login.html"
 
-let d=doc.data()
+}
 
-document.getElementById("list").innerHTML+=`
+/* LOAD BILL */
 
-<div>
+function load(){
 
-User: ${d.user} <br>
-Tiền: ${d.amount} <br>
+let data=JSON.parse(localStorage.getItem("bill"))||[]
 
-<button onclick="duyet('${doc.id}')">Duyệt</button>
+let html=""
 
-</div>
+data.forEach((b,i)=>{
 
-<hr>
+html+=`
+
+<tr>
+
+<td>${b.user}</td>
+<td>${b.amount}</td>
+<td>${b.time}</td>
+<td>${b.status}</td>
+
+<td>
+
+<button class="ok" onclick="duyet(${i})">Duyệt</button>
+
+<button class="del" onclick="xoa(${i})">Xóa</button>
+
+</td>
+
+</tr>
 
 `
 
 })
 
-})
-
-function duyet(id){
-
-db.collection("nap").doc(id).update({
-
-status:"da_duyet"
-
-})
-
-alert("Đã duyệt")
+document.getElementById("list").innerHTML=html
 
 }
 
+/* DUYỆT */
+
+function duyet(i){
+
+let data=JSON.parse(localStorage.getItem("bill"))
+
+data[i].status="Đã duyệt"
+
+localStorage.setItem("bill",JSON.stringify(data))
+
+load()
+
+}
+
+/* XOÁ */
+
+function xoa(i){
+
+let data=JSON.parse(localStorage.getItem("bill"))
+
+data.splice(i,1)
+
+localStorage.setItem("bill",JSON.stringify(data))
+
+load()
+
+}
+
+load()
+
 </script>
+
+</body>
+</html>
