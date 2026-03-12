@@ -16,17 +16,17 @@ background:#0f172a;
 color:white;
 text-align:center;
 margin:0;
-overflow:hidden;
+overflow-x:hidden;
 }
 
 /* BOX */
 
 .box{
-margin-top:100px;
+margin-top:90px;
 background:#1e293b;
-padding:30px;
+padding:25px;
 border-radius:15px;
-width:330px;
+width:340px;
 margin-left:auto;
 margin-right:auto;
 box-shadow:0 0 20px rgba(0,170,255,0.6);
@@ -37,6 +37,7 @@ box-shadow:0 0 20px rgba(0,170,255,0.6);
 .qr{
 width:260px;
 border-radius:10px;
+margin:10px 0;
 }
 
 /* TEXT */
@@ -44,8 +45,30 @@ border-radius:10px;
 .typing{
 color:#00aaff;
 font-weight:bold;
-margin-top:15px;
-font-size:18px;
+margin-top:10px;
+font-size:17px;
+}
+
+/* INPUT */
+
+input{
+width:90%;
+padding:10px;
+border-radius:8px;
+border:none;
+margin:6px;
+}
+
+/* BUTTON */
+
+button{
+background:#00c853;
+border:none;
+padding:12px 20px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
 }
 
 /* SNOW */
@@ -81,6 +104,22 @@ transform:translateY(100vh);
 
 <p class="typing" id="typing"></p>
 
+<hr>
+
+<h3>Gửi bill sau khi chuyển</h3>
+
+<input id="user" placeholder="Tên tài khoản">
+
+<input id="amount" placeholder="Số tiền">
+
+<input type="file" id="bill">
+
+<br>
+
+<button onclick="guiBill()">Gửi bill</button>
+
+<p id="msg"></p>
+
 </div>
 
 <script>
@@ -89,7 +128,7 @@ transform:translateY(100vh);
 
 const texts=[
 "Nạp tối thiểu 10K",
-"Nạp đúng nội dung để được cộng xu",
+"Nạp đúng nội dung chuyển khoản",
 "Chờ admin duyệt sau khi nạp"
 ]
 
@@ -128,6 +167,24 @@ setTimeout(type,90)
 }
 
 type()
+
+/* SEND BILL */
+
+function guiBill(){
+
+let user=document.getElementById("user").value
+let amount=document.getElementById("amount").value
+
+if(user=="" || amount==""){
+
+document.getElementById("msg").innerHTML="Nhập đầy đủ thông tin"
+return
+
+}
+
+document.getElementById("msg").innerHTML="Đã gửi bill chờ admin duyệt"
+
+}
 
 /* SNOW */
 
