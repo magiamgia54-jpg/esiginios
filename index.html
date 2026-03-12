@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>IOS Thắng Sign</title>
 
@@ -12,179 +14,106 @@
 body{
 margin:0;
 font-family:Arial;
-background:#f2f2f2;
+background:#f5f5f5;
 text-align:center;
-overflow-x:hidden;
 }
 
-/* TOPBAR */
+/* thanh trên */
 
 .topbar{
-background:#333;
+background:#222;
 color:white;
 padding:15px;
-position:fixed;
-width:100%;
-top:0;
-z-index:1000;
+font-size:20px;
+position:relative;
 }
 
-.menu-btn{
+/* nút menu */
+
+.menuBtn{
 position:absolute;
 right:20px;
-top:15px;
-font-size:22px;
-cursor:pointer;
-}
-
-/* USER */
-
-.user{
-position:absolute;
-right:60px;
 top:10px;
-}
-
-.avatar{
-width:35px;
-border-radius:50%;
+font-size:28px;
 cursor:pointer;
 }
 
-/* USER MENU */
+/* menu */
 
-.userMenu{
-display:none;
+.menu{
 position:absolute;
 right:10px;
 top:55px;
 background:white;
-width:200px;
+width:220px;
 border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-overflow:hidden;
-}
-
-.userMenu a{
-display:flex;
-justify-content:space-between;
-padding:12px;
-text-decoration:none;
-color:black;
-border-bottom:1px solid #eee;
-}
-
-.balance{
-color:#2196f3;
-font-weight:bold;
-}
-
-/* MENU */
-
-.menu{
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 display:none;
-background:#222;
-padding:10px;
+text-align:left;
 }
 
 .menu a{
 display:block;
-padding:10px;
-color:white;
+padding:12px;
+border-bottom:1px solid #eee;
 text-decoration:none;
+color:black;
 }
 
-/* HEADER */
-
-.header{
-margin-top:90px;
-}
-
-.logo{
-width:110px;
-border-radius:50%;
-box-shadow:0 0 15px rgba(0,170,255,0.8);
-}
-
-/* TYPING */
-
-.typing{
-color:#00aaff;
-font-weight:bold;
-font-size:18px;
-}
-
-/* SOCIAL */
-
-.social{
-margin:20px;
-}
-
-.social button{
-background:#333;
+.menu a:last-child{
 border:none;
-color:white;
-padding:14px 24px;
-margin:5px;
-border-radius:10px;
-cursor:pointer;
 }
 
-/* APP */
+/* avatar */
 
-.apps{
-margin:20px;
+.avatar{
+width:120px;
+height:120px;
+border-radius:50%;
+margin-top:30px;
+box-shadow:0 0 15px #00aaff;
 }
 
-.app{
+/* tiêu đề */
+
+.title{
+font-size:38px;
+font-weight:bold;
+margin-top:20px;
+}
+
+/* chữ chạy */
+
+.subtitle{
+color:#2196f3;
+margin-top:10px;
+height:24px;
+}
+
+/* app */
+
+.appbox{
 background:white;
-padding:15px;
-margin:10px;
-border-radius:12px;
+margin:30px;
+padding:20px;
+border-radius:15px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-}
-
-.app-left{
-display:flex;
-align-items:center;
-}
-
-.app img{
-width:50px;
-height:50px;
-border-radius:10px;
-margin-right:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 .install{
 background:#00c853;
-border:none;
 color:white;
-padding:10px 15px;
+border:none;
+padding:10px 20px;
 border-radius:8px;
 cursor:pointer;
 }
 
-/* SNOW */
-
-.snowflake{
-position:fixed;
-top:-10px;
-color:white;
-font-size:12px;
-pointer-events:none;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{
-transform:translateY(100vh);
-}
-}
-
 </style>
+
 </head>
 
 <body>
@@ -193,78 +122,48 @@ transform:translateY(100vh);
 
 IOS Thắng Sign
 
-<div class="user" onclick="toggleUserMenu()">
-<img src="https://i.imgur.com/2yaf2wb.png" class="avatar">
-</div>
-
-<span class="menu-btn" onclick="toggleMenu()">☰</span>
+<span class="menuBtn" onclick="openMenu()">☰</span>
 
 </div>
-
-<!-- USER MENU -->
-
-<div class="userMenu" id="userMenu">
-
-<a href="#">
-<span>👤 Tài khoản</span>
-<span id="usernameText"></span>
-</a>
-
-<a href="#">
-<span>💰 Số dư</span>
-<span class="balance" id="balanceText">0đ</span>
-</a>
-
-<a href="nap.html">
-<span>💳 Nạp tiền</span>
-</a>
-
-<a href="#" onclick="logout()">
-<span>🚪 Đăng xuất</span>
-</a>
-
-</div>
-
 
 <div class="menu" id="menu">
-<a href="#">Trang chủ</a>
-<a href="chungchi.html">Mua chứng chỉ</a>
-<a href="login.html">Đăng nhập</a>
-</div>
 
+<a>👤 Tài khoản : <span id="username"></span></a>
 
-<div class="header">
+<a>💰 Số dư : <span id="balance">0đ</span></a>
 
-<img class="logo" src="https://i.imgur.com/8Km9tLL.png">
+<a href="nap.html">💳 Nạp tiền</a>
 
-<h2>Hi, this is</h2>
-
-<h1>IOS Thắng Website Tải Esign & Ksign Free ✔</h1>
-
-<p class="typing" id="typing"></p>
+<a onclick="logout()">🚪 Đăng xuất</a>
 
 </div>
 
+<img class="avatar" src="https://i.imgur.com/2yaf2wb.png">
+
+<h2>Hi, <span id="hello"></span></h2>
+
+<div class="title">
+
+IOS Thắng Website Tải  
+Esign & Ksign Free ✔
+
+</div>
+
+<p class="subtitle" id="typing"></p>
 
 <h2>Signed App</h2>
 
-<div class="apps">
-
-<div class="app">
-
-<div class="app-left">
-
-<img src="https://i.imgur.com/Q9Lg3Hh.png">
+<div class="appbox">
 
 <div>
-<b>Delta VNG Fix Lag IOS</b><br>
-<small>Version 2.7.10</small>
-</div>
+
+<b>Delta VNG Fix Lag IOS</b>
+<br>
+Version 2.7.10
 
 </div>
 
-<button class="install"
-onclick="window.location.href='itms-services://?action=download-manifest&url=https://yourdomain.com/delta.plist'">
+<button class="install">
 
 Install
 
@@ -272,114 +171,156 @@ Install
 
 </div>
 
-</div>
-
 <script>
 
-/* MENU */
+/* mở menu */
 
-function toggleMenu(){
-let menu=document.getElementById("menu")
-menu.style.display = menu.style.display==="block" ? "none":"block"
+function openMenu(){
+
+let m=document.getElementById("menu")
+
+m.style.display = (m.style.display=="block") ? "none":"block"
+
 }
 
-/* USER MENU */
-
-function toggleUserMenu(){
-let menu=document.getElementById("userMenu")
-menu.style.display = menu.style.display==="block" ? "none":"block"
-}
-
-/* USERNAME */
-
-let username = localStorage.getItem("user") || "Khách"
-document.getElementById("usernameText").innerHTML = username
-
-/* BALANCE */
-
-let balance = localStorage.getItem("balance") || 0
-let date = localStorage.getItem("napDate")
-
-let text = balance + "đ"
-
-if(balance > 0 && date){
-text = balance + "đ ("+date+")"
-}
-
-document.getElementById("balanceText").innerHTML = text
-
-/* LOGOUT */
+/* đăng xuất */
 
 function logout(){
-localStorage.removeItem("user")
-location.href="login.html"
+
+localStorage.removeItem("login")
+
+location.reload()
+
 }
 
-/* TEXT */
+/* load user */
 
-const texts=[
-"Mua Chứng Chỉ Esign Liên Hệ Zalo",
-"Mua Chứng Chỉ Ksign Liên Hệ Telegram",
-"Website Ký App IOS Uy Tín"
-]
+function loadUser(){
 
-let index=0
-let char=0
+let login=localStorage.getItem("login")
+
+if(!login){
+
+document.getElementById("username").innerHTML="Khách"
+
+return
+
+}
+
+document.getElementById("username").innerHTML=login
+document.getElementById("hello").innerHTML=login
+
+}
+
+/* load số dư */
+
+function loadBalance(){
+
+let login=localStorage.getItem("login")
+
+if(!login) return
+
+let users=JSON.parse(localStorage.getItem("users"))||[]
+
+let u=users.find(x=>x.username==login)
+
+if(u){
+
+document.getElementById("balance").innerHTML=(u.money||0)+"đ"
+
+}
+
+}
+
+/* chào theo thời gian */
+
+function greeting(){
+
+let hour=new Date().getHours()
+
+let text=""
+
+if(hour>=5 && hour<12){
+
+text="🌅 Chào Buổi Sáng - Chúc Bạn 1 Ngày Vui Vẻ Cùng Thắng IOS"
+
+}
+else if(hour>=12 && hour<18){
+
+text="☀️ Chào Buổi Chiều - Chúc Bạn 1 Ngày Vui Vẻ Cùng Thắng IOS"
+
+}
+else{
+
+text="🌙 Chào Buổi Tối - Chúc Bạn Buổi Tối Vui Vẻ Cùng Thắng IOS"
+
+}
+
+alert(text)
+
+}
+
+/* chữ tự viết */
+
+const text="Mua Chứng Chỉ Esign Liên Hệ Telegram @iossigm"
+
+let i=0
 let deleting=false
 
-function type(){
+function typingEffect(){
 
 let el=document.getElementById("typing")
 
 if(!deleting){
 
-el.innerHTML=texts[index].substring(0,char++)
+el.innerHTML=text.substring(0,i)
 
-if(char>texts[index].length){
+i++
+
+if(i>text.length){
+
 deleting=true
-setTimeout(type,1500)
+
+setTimeout(typingEffect,1500)
+
 return
+
 }
 
 }else{
 
-el.innerHTML=texts[index].substring(0,char--)
+el.innerHTML=text.substring(0,i)
 
-if(char<0){
+i--
+
+if(i<0){
+
 deleting=false
-index++
-if(index>=texts.length) index=0
-}
+
+i=0
 
 }
 
-setTimeout(type,80)
+}
+
+setTimeout(typingEffect,80)
 
 }
 
-type()
+typingEffect()
 
-/* SNOW */
+/* chạy khi vào web */
 
-function snow(){
+window.onload=function(){
 
-let snow=document.createElement("div")
-
-snow.className="snowflake"
-snow.innerHTML="❄"
-
-snow.style.left=Math.random()*window.innerWidth+"px"
-snow.style.animationDuration=(Math.random()*5+5)+"s"
-
-document.body.appendChild(snow)
-
-setTimeout(()=>{snow.remove()},10000)
+loadUser()
+loadBalance()
+greeting()
 
 }
-
-setInterval(snow,200)
 
 </script>
 
 </body>
+
 </html>
