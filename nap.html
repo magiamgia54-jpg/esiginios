@@ -1,214 +1,66 @@
+
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Nạp tiền</title>
 
-<style>
-
-body{
-background:#0f172a;
-font-family:Arial;
-color:white;
-text-align:center;
-margin:0;
-}
-
-.box{
-margin-top:80px;
-background:#1e293b;
-padding:25px;
-width:340px;
-margin:auto;
-border-radius:12px;
-box-shadow:0 0 20px #00aaff;
-}
-
-.qr{
-width:250px;
-margin:10px 0;
-}
-
-input{
-width:90%;
-padding:10px;
-margin:8px;
-border:none;
-border-radius:8px;
-}
-
-button{
-background:#00c853;
-padding:10px 20px;
-border:none;
-border-radius:8px;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.typing{
-color:#00aaff;
-font-weight:bold;
-}
-
-.snow{
-position:fixed;
-top:-10px;
-color:white;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{
-transform:translateY(100vh);
-}
-}
-
-</style>
-
 </head>
 
-<body>
-
-<div class="box">
+<body style="text-align:center;font-family:Arial">
 
 <h2>Nạp tiền</h2>
 
-<img id="qr" class="qr">
+<input id="money" placeholder="Nhập số tiền">
 
-<p><b>LY VAN THANG</b></p>
-<p>ACB - 23935211</p>
-
-<p class="typing" id="typing"></p>
-
-<input id="money" placeholder="Nhập số tiền" oninput="formatMoney(this)">
-
-<br>
+<br><br>
 
 <button onclick="taoQR()">Tạo QR</button>
 
-<hr>
+<br><br>
+
+<img id="qr" width="250">
 
 <h3>Gửi bill</h3>
 
-<input id="user" placeholder="Tên tài khoản">
-
 <button onclick="send()">Gửi bill</button>
-
-<p id="msg"></p>
-
-</div>
 
 <script>
 
-/* chữ chạy */
-
-const text="Nạp tối thiểu 10K"
-
-let i=0
-
-function write(){
-
-document.getElementById("typing").innerHTML=text.substring(0,i)
-
-i++
-
-if(i<=text.length) setTimeout(write,80)
-
-}
-
-write()
-
-/* format tiền */
-
-function formatMoney(input){
-
-let value=input.value.replace(/,/g,"")
-
-if(isNaN(value)) return
-
-let number=parseInt(value)
-
-input.value=number.toLocaleString("en-US")
-
-}
-
-/* tạo QR */
-
 function taoQR(){
 
-let money=document.getElementById("money").value.replace(/,/g,"")
+let money=document.getElementById("money").value
 
-if(money<10000){
-
-alert("Nạp tối thiểu 10K")
-
-return
-
-}
-
-let qr=`https://img.vietqr.io/image/acb-23935211-compact.png?amount=${money}&addInfo=NAPTIEN`
+let qr=`https://img.vietqr.io/image/acb-23935211-compact.png?amount=${money}`
 
 document.getElementById("qr").src=qr
 
 }
 
-/* gửi bill cho admin */
-
 function send(){
 
-let user=document.getElementById("user").value || "khách"
+let money=document.getElementById("money").value
 
-let money=document.getElementById("money").value.replace(/,/g,"")
+let user=localStorage.getItem("login")
 
-if(money==""){
+let data=JSON.parse(localStorage.getItem("bill"))||[]
 
-alert("Nhập số tiền trước")
-
-return
-
-}
-
-let list=JSON.parse(localStorage.getItem("billnap"))||[]
-
-list.push({
+data.push({
 
 user:user,
-tien:money,
-time:new Date().toLocaleString()
+money:money,
+status:"Chờ"
 
 })
 
-localStorage.setItem("billnap",JSON.stringify(list))
+localStorage.setItem("bill",JSON.stringify(data))
 
-document.getElementById("msg").innerHTML="Đã gửi bill, chờ admin duyệt"
-
-}
-
-/* tuyết */
-
-function snow(){
-
-let s=document.createElement("div")
-
-s.className="snow"
-s.innerHTML="❄"
-
-s.style.left=Math.random()*window.innerWidth+"px"
-s.style.animationDuration=(Math.random()*5+5)+"s"
-
-document.body.appendChild(s)
-
-setTimeout(()=>{s.remove()},10000)
+alert("Đã gửi bill")
 
 }
-
-setInterval(snow,200)
 
 </script>
 
