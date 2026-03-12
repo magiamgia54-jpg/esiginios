@@ -1,0 +1,44 @@
+<h2>Danh sách nạp tiền</h2>
+
+<div id="list"></div>
+
+<script>
+
+db.collection("nap").get().then((data)=>{
+
+data.forEach((doc)=>{
+
+let d=doc.data()
+
+document.getElementById("list").innerHTML+=`
+
+<div>
+
+User: ${d.user} <br>
+Tiền: ${d.amount} <br>
+
+<button onclick="duyet('${doc.id}')">Duyệt</button>
+
+</div>
+
+<hr>
+
+`
+
+})
+
+})
+
+function duyet(id){
+
+db.collection("nap").doc(id).update({
+
+status:"da_duyet"
+
+})
+
+alert("Đã duyệt")
+
+}
+
+</script>
