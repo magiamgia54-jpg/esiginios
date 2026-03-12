@@ -56,8 +56,6 @@ color:#00aaff;
 font-weight:bold;
 }
 
-/* tuyết */
-
 .snow{
 position:fixed;
 top:-10px;
@@ -160,27 +158,35 @@ document.getElementById("qr").src=qr
 
 }
 
-/* gửi bill */
+/* gửi bill cho admin */
 
 function send(){
 
-let user=document.getElementById("user").value
-let money=document.getElementById("money").value
+let user=document.getElementById("user").value || "khách"
 
-let data=JSON.parse(localStorage.getItem("bill"))||[]
+let money=document.getElementById("money").value.replace(/,/g,"")
 
-data.push({
+if(money==""){
+
+alert("Nhập số tiền trước")
+
+return
+
+}
+
+let list=JSON.parse(localStorage.getItem("billnap"))||[]
+
+list.push({
 
 user:user,
-money:money,
-status:"Chờ duyệt",
+tien:money,
 time:new Date().toLocaleString()
 
 })
 
-localStorage.setItem("bill",JSON.stringify(data))
+localStorage.setItem("billnap",JSON.stringify(list))
 
-document.getElementById("msg").innerHTML="Đã gửi bill"
+document.getElementById("msg").innerHTML="Đã gửi bill, chờ admin duyệt"
 
 }
 
