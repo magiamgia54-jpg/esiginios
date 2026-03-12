@@ -14,9 +14,14 @@ color:white;
 padding:30px;
 }
 
+h2{
+text-align:center;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
+margin-top:20px;
 }
 
 th,td{
@@ -102,19 +107,37 @@ document.getElementById("list").innerHTML=html
 
 }
 
+
 function duyet(i){
 
-let data=JSON.parse(localStorage.getItem("billnap"))||[]
+let bill=JSON.parse(localStorage.getItem("billnap"))||[]
+let users=JSON.parse(localStorage.getItem("users"))||[]
 
-alert("Đã duyệt cho "+data[i].user)
+let username=bill[i].user
+let money=parseInt(bill[i].tien)
 
-data.splice(i,1)
+users.forEach(u=>{
 
-localStorage.setItem("billnap",JSON.stringify(data))
+if(u.username==username){
+
+u.balance=(parseInt(u.balance)||0)+money
+
+}
+
+})
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Đã cộng "+money+" cho "+username)
+
+bill.splice(i,1)
+
+localStorage.setItem("billnap",JSON.stringify(bill))
 
 load()
 
 }
+
 
 function xoa(i){
 
