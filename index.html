@@ -14,18 +14,20 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0f172a;
+background:#07122a;
 color:white;
 }
 
-/* LOGIN */
+/* LOGIN + REGISTER */
 
-.login{
+.box{
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+z-index:10;
+position:relative;
 }
 
 input{
@@ -33,17 +35,29 @@ width:260px;
 padding:12px;
 margin:8px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 }
 
 button{
 padding:10px 20px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 background:#00c853;
 color:white;
 font-weight:bold;
 cursor:pointer;
+}
+
+.link{
+margin-top:10px;
+color:#00aaff;
+cursor:pointer;
+}
+
+/* đăng ký ẩn */
+
+#registerBox{
+display:none;
 }
 
 /* HOME */
@@ -52,7 +66,7 @@ cursor:pointer;
 display:none;
 }
 
-/* HEADER */
+/* header */
 
 .header{
 background:#1e293b;
@@ -67,7 +81,7 @@ font-size:22px;
 cursor:pointer;
 }
 
-/* MENU */
+/* menu */
 
 .userMenu{
 display:none;
@@ -85,7 +99,7 @@ color:white;
 text-decoration:none;
 }
 
-/* CARD */
+/* card */
 
 .card{
 background:#1e293b;
@@ -94,7 +108,7 @@ padding:20px;
 border-radius:12px;
 }
 
-/* APP */
+/* app */
 
 .app{
 display:flex;
@@ -112,8 +126,8 @@ border-radius:10px;
 
 .typing{
 color:#00aaff;
-text-align:center;
 font-weight:bold;
+text-align:center;
 }
 
 /* tuyết */
@@ -125,6 +139,7 @@ color:white;
 font-size:18px;
 pointer-events:none;
 animation:fall linear infinite;
+z-index:1;
 }
 
 @keyframes fall{
@@ -141,7 +156,7 @@ transform:translateY(100vh);
 
 <!-- LOGIN -->
 
-<div class="login" id="loginPage">
+<div class="box" id="loginBox">
 
 <h2>Đăng nhập</h2>
 
@@ -150,12 +165,23 @@ transform:translateY(100vh);
 
 <button onclick="login()">Đăng nhập</button>
 
-<h3>Đăng ký</h3>
+<div class="link" onclick="showRegister()">Chưa có tài khoản? Đăng ký</div>
+
+</div>
+
+
+<!-- REGISTER -->
+
+<div class="box" id="registerBox">
+
+<h2>Đăng ký</h2>
 
 <input id="regUser" placeholder="Tên tài khoản">
-<input id="regPass" type="password" placeholder="Mật khẩu">
+<input id="regPass" placeholder="Mật khẩu">
 
 <button onclick="register()">Đăng ký</button>
+
+<div class="link" onclick="showLogin()">Quay lại đăng nhập</div>
 
 </div>
 
@@ -191,7 +217,6 @@ transform:translateY(100vh);
 
 </div>
 
-
 <div class="card">
 
 <h2>Signed App</h2>
@@ -213,16 +238,21 @@ transform:translateY(100vh);
 
 </div>
 
-
 <script>
 
-/* menu */
+/* chuyển form */
 
-function openMenu(){
+function showRegister(){
 
-let m=document.getElementById("menu")
+document.getElementById("loginBox").style.display="none"
+document.getElementById("registerBox").style.display="flex"
 
-m.style.display=(m.style.display=="block")?"none":"block"
+}
+
+function showLogin(){
+
+document.getElementById("loginBox").style.display="flex"
+document.getElementById("registerBox").style.display="none"
 
 }
 
@@ -245,6 +275,8 @@ localStorage.setItem("users",JSON.stringify(users))
 
 alert("Đăng ký thành công")
 
+showLogin()
+
 }
 
 /* đăng nhập */
@@ -262,7 +294,12 @@ if(u){
 
 localStorage.setItem("login",user)
 
-showHome()
+document.getElementById("loginBox").style.display="none"
+document.getElementById("homePage").style.display="block"
+
+document.getElementById("hello").innerHTML="👋 "+user
+
+greeting()
 
 }else{
 
@@ -272,19 +309,37 @@ alert("Sai tài khoản")
 
 }
 
-/* hiện home */
+/* menu */
 
-function showHome(){
+function openMenu(){
 
-document.getElementById("loginPage").style.display="none"
+let m=document.getElementById("menu")
 
-document.getElementById("homePage").style.display="block"
+m.style.display=(m.style.display=="block")?"none":"block"
 
-let user=localStorage.getItem("login")
+}
 
-document.getElementById("hello").innerHTML="👋 "+user
+/* số dư */
 
-greeting()
+function showBalance(){
+
+let login=localStorage.getItem("login")
+
+let users=JSON.parse(localStorage.getItem("users"))||[]
+
+let u=users.find(x=>x.username==login)
+
+alert("Số dư: "+u.money+" VNĐ")
+
+}
+
+/* logout */
+
+function logout(){
+
+localStorage.removeItem("login")
+
+location.reload()
 
 }
 
@@ -349,44 +404,6 @@ setTimeout(typeEffect,80)
 }
 
 typeEffect()
-
-/* số dư */
-
-function showBalance(){
-
-let login=localStorage.getItem("login")
-
-let users=JSON.parse(localStorage.getItem("users"))||[]
-
-let u=users.find(x=>x.username==login)
-
-alert("Số dư: "+u.money+" VNĐ")
-
-}
-
-/* logout */
-
-function logout(){
-
-localStorage.removeItem("login")
-
-location.reload()
-
-}
-
-/* auto login */
-
-window.onload=function(){
-
-let login=localStorage.getItem("login")
-
-if(login){
-
-showHome()
-
-}
-
-}
 
 /* tuyết */
 
