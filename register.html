@@ -1,13 +1,81 @@
-<h2 style="text-align:center;margin-top:100px">Đăng ký</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
 
-<form style="text-align:center">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<input placeholder="Tài khoản"><br><br>
+<title>Đăng ký</title>
 
-<input placeholder="Email"><br><br>
+<style>
 
-<input type="password" placeholder="Mật khẩu"><br><br>
+body{
+font-family:Arial;
+text-align:center;
+margin-top:100px;
+}
 
-<button>Tạo tài khoản</button>
+input{
+display:block;
+margin:15px auto;
+padding:12px;
+width:220px;
+border-radius:8px;
+border:1px solid #999;
+}
 
-</form>
+button{
+padding:12px 25px;
+border:none;
+background:#2196f3;
+color:white;
+border-radius:20px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Đăng ký</h1>
+
+<input id="user" placeholder="Tên tài khoản">
+
+<input id="email" placeholder="Email">
+
+<input id="pass" type="password" placeholder="Mật khẩu">
+
+<button onclick="register()">Tạo tài khoản</button>
+
+<script>
+
+function register(){
+
+let user=document.getElementById("user").value
+let email=document.getElementById("email").value
+let pass=document.getElementById("pass").value
+
+if(user=="" || pass==""){
+alert("Vui lòng nhập đầy đủ")
+return
+}
+
+/* Lưu tài khoản */
+
+localStorage.setItem("user",user)
+localStorage.setItem("pass",pass)
+
+/* chuyển sang login */
+
+alert("Đăng ký thành công")
+
+window.location.href="login.html"
+
+}
+
+</script>
+
+</body>
+</html>
