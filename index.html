@@ -7,64 +7,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>IOS Thắng Sign</title>
+<title>Thắng IOS Sign</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:#f2f2f2;
-text-align:center;
-}
-
-.topbar{
-background:#222;
+background:#0f172a;
 color:white;
-padding:15px;
-font-size:20px;
-position:relative;
 }
 
-.menuBtn{
-position:absolute;
-right:20px;
-top:10px;
-font-size:28px;
+/* LOGIN */
+
+.login{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+input{
+width:260px;
+padding:12px;
+margin:8px;
+border:none;
+border-radius:8px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#00c853;
+color:white;
+font-weight:bold;
 cursor:pointer;
 }
 
-.menu{
-position:absolute;
-right:10px;
-top:60px;
-background:white;
-width:220px;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+/* HOME */
+
+.home{
 display:none;
 }
 
-.menu a{
+/* HEADER */
+
+.header{
+background:#1e293b;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.menu{
+font-size:22px;
+cursor:pointer;
+}
+
+/* MENU */
+
+.userMenu{
+display:none;
+position:absolute;
+right:10px;
+top:60px;
+background:#1e293b;
+border-radius:10px;
+}
+
+.userMenu a{
 display:block;
-padding:12px;
-border-bottom:1px solid #eee;
+padding:10px 20px;
+color:white;
 text-decoration:none;
-color:black;
 }
 
-.avatar{
-width:120px;
-height:120px;
-border-radius:50%;
-margin-top:25px;
-}
+/* CARD */
 
-.appbox{
-background:white;
-margin:30px;
+.card{
+background:#1e293b;
+margin:20px;
 padding:20px;
-border-radius:15px;
+border-radius:12px;
+}
+
+/* APP */
+
+.app{
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -72,30 +104,33 @@ align-items:center;
 
 .install{
 background:#00c853;
-border:none;
 padding:10px 20px;
-border-radius:8px;
+border-radius:10px;
+}
+
+/* chữ chạy */
+
+.typing{
+color:#00aaff;
+text-align:center;
+font-weight:bold;
+}
+
+/* tuyết */
+
+.snow{
+position:fixed;
+top:-10px;
 color:white;
+font-size:18px;
+pointer-events:none;
+animation:fall linear infinite;
 }
 
-.loginBox{
-margin-top:80px;
+@keyframes fall{
+to{
+transform:translateY(100vh);
 }
-
-input{
-width:80%;
-padding:12px;
-margin:8px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-button{
-padding:12px 25px;
-border:none;
-border-radius:8px;
-background:#2d8cf0;
-color:white;
 }
 
 </style>
@@ -104,83 +139,84 @@ color:white;
 
 <body>
 
-<div id="loginPage" class="loginBox">
+<!-- LOGIN -->
+
+<div class="login" id="loginPage">
 
 <h2>Đăng nhập</h2>
 
 <input id="loginUser" placeholder="Tên tài khoản">
-
 <input id="loginPass" type="password" placeholder="Mật khẩu">
-
-<br>
 
 <button onclick="login()">Đăng nhập</button>
 
-<h2>Đăng ký</h2>
+<h3>Đăng ký</h3>
 
 <input id="regUser" placeholder="Tên tài khoản">
-
 <input id="regPass" type="password" placeholder="Mật khẩu">
-
-<br>
 
 <button onclick="register()">Đăng ký</button>
 
 </div>
 
-<div id="homePage" style="display:none">
 
-<div class="topbar">
+<!-- HOME -->
 
-IOS Thắng Sign
+<div class="home" id="homePage">
 
-<span class="menuBtn" onclick="openMenu()">☰</span>
+<div class="header">
+
+<div class="menu" onclick="openMenu()">☰</div>
+
+<div id="hello"></div>
 
 </div>
 
-<div class="menu" id="menu">
+<div class="userMenu" id="menu">
 
-<a>👤 <span id="username"></span></a>
-
-<a>💰 Số dư: <span id="balance">0</span>đ</a>
-
+<a onclick="showBalance()">💰 Số dư</a>
 <a href="nap.html">💳 Nạp tiền</a>
-
 <a onclick="logout()">🚪 Đăng xuất</a>
 
 </div>
 
-<img class="avatar" src="https://i.imgur.com/2yaf2wb.png">
+<div class="card">
 
-<h2 id="hello"></h2>
+<h2 id="typing" class="typing"></h2>
 
 <h3>Mua chứng chỉ</h3>
 
-<p>
+<p>Zalo: 0395251479</p>
+<p>Telegram: @iossigm</p>
 
-Zalo: 0395251479<br>
-Telegram: @iossigm
+</div>
 
-</p>
+
+<div class="card">
 
 <h2>Signed App</h2>
 
-<div class="appbox">
+<div class="app">
 
 <div>
 
-<b>Delta VNG Fix Lag IOS</b><br>
-Version 2.7.10
+<b>Delta VNG Fix Lag IOS</b>
+<p>Version 2.7.10</p>
 
 </div>
 
-<button class="install">Install</button>
+<div class="install">Install</div>
 
 </div>
 
 </div>
+
+</div>
+
 
 <script>
+
+/* menu */
 
 function openMenu(){
 
@@ -190,14 +226,20 @@ m.style.display=(m.style.display=="block")?"none":"block"
 
 }
 
+/* đăng ký */
+
 function register(){
 
-let user=regUser.value
-let pass=regPass.value
+let user=document.getElementById("regUser").value
+let pass=document.getElementById("regPass").value
 
 let users=JSON.parse(localStorage.getItem("users"))||[]
 
-users.push({username:user,password:pass,money:0})
+users.push({
+username:user,
+password:pass,
+money:0
+})
 
 localStorage.setItem("users",JSON.stringify(users))
 
@@ -205,10 +247,12 @@ alert("Đăng ký thành công")
 
 }
 
+/* đăng nhập */
+
 function login(){
 
-let user=loginUser.value
-let pass=loginPass.value
+let user=document.getElementById("loginUser").value
+let pass=document.getElementById("loginPass").value
 
 let users=JSON.parse(localStorage.getItem("users"))||[]
 
@@ -228,21 +272,87 @@ alert("Sai tài khoản")
 
 }
 
+/* hiện home */
+
 function showHome(){
 
-loginPage.style.display="none"
-homePage.style.display="block"
+document.getElementById("loginPage").style.display="none"
+
+document.getElementById("homePage").style.display="block"
 
 let user=localStorage.getItem("login")
 
-username.innerHTML=user
-hello.innerHTML="Hi, "+user
+document.getElementById("hello").innerHTML="👋 "+user
 
-loadBalance()
+greeting()
 
 }
 
-function loadBalance(){
+/* chào */
+
+function greeting(){
+
+let hour=new Date().getHours()
+
+if(hour<18){
+
+alert("🌤 Chào Buổi Sáng - Chúc Bạn 1 Ngày Vui Vẻ Cùng Thắng IOS")
+
+}else{
+
+alert("🌙 Chào Buổi Tối - Chúc Bạn Buổi Tối Vui Vẻ Cùng Thắng IOS")
+
+}
+
+}
+
+/* chữ tự viết */
+
+let text="Chào mừng bạn đến với Thắng IOS Sign"
+let i=0
+let typing=true
+
+function typeEffect(){
+
+let el=document.getElementById("typing")
+
+if(typing){
+
+el.innerHTML=text.substring(0,i)
+
+i++
+
+if(i>text.length){
+
+typing=false
+setTimeout(typeEffect,1000)
+return
+
+}
+
+}else{
+
+el.innerHTML=text.substring(0,i)
+
+i--
+
+if(i==0){
+
+typing=true
+
+}
+
+}
+
+setTimeout(typeEffect,80)
+
+}
+
+typeEffect()
+
+/* số dư */
+
+function showBalance(){
 
 let login=localStorage.getItem("login")
 
@@ -250,13 +360,11 @@ let users=JSON.parse(localStorage.getItem("users"))||[]
 
 let u=users.find(x=>x.username==login)
 
-if(u){
-
-balance.innerHTML=u.money
+alert("Số dư: "+u.money+" VNĐ")
 
 }
 
-}
+/* logout */
 
 function logout(){
 
@@ -265,6 +373,8 @@ localStorage.removeItem("login")
 location.reload()
 
 }
+
+/* auto login */
 
 window.onload=function(){
 
@@ -277,6 +387,28 @@ showHome()
 }
 
 }
+
+/* tuyết */
+
+function snow(){
+
+let s=document.createElement("div")
+
+s.className="snow"
+
+s.innerHTML="❄"
+
+s.style.left=Math.random()*window.innerWidth+"px"
+
+s.style.animationDuration=(Math.random()*5+5)+"s"
+
+document.body.appendChild(s)
+
+setTimeout(()=>{s.remove()},10000)
+
+}
+
+setInterval(snow,200)
 
 </script>
 
